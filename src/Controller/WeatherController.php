@@ -23,7 +23,7 @@ class WeatherController extends AbstractController
     }
 
     public function cityAction2(City $city_country,City $city_name, WeatherRepository $weatherRepository,CityRepository $cityRepository): Response
-    {z
+    {
         $weathers = $weatherRepository->findByCity($city_name);
         return $this->render('weather/city.html.twig', [
             'city' => $city_name,
