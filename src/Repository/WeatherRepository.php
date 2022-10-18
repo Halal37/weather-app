@@ -51,20 +51,4 @@ class WeatherRepository extends ServiceEntityRepository
         $result = $query->getResult();
         return $result;
     }
-
-    public function findByCity2(City $city)
-    {
-
-
-
-        $qb = $this->createQueryBuilder('m');
-        $qb->where('m.city_id = :city')
-            ->setParameter('city', $city)
-            ->andWhere('m.date > :now')
-            ->setParameter('now', date('Y-m-d'));
-        $query = $qb->getQuery();
-        $result = $query->getResult();
-        return $result;
-    }
-
 }

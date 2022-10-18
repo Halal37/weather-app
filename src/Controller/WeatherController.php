@@ -14,7 +14,6 @@ class WeatherController extends AbstractController
 {
     public function cityAction(City $city, WeatherRepository $weatherRepository): Response
     {
-        var_dump($city);
         $weathers = $weatherRepository->findByCity($city);
         return $this->render('weather/city.html.twig', [
             'city' => $city,
@@ -22,14 +21,18 @@ class WeatherController extends AbstractController
         ]);
     }
 
-    public function cityAction2(City $city_country,City $city_name, WeatherRepository $weatherRepository,CityRepository $cityRepository): Response
+    public function cityByNameAction(string $country, string $city, CityRepository $cityRepository, WeatherRepository $weatherRepository): Response
     {
-        $weathers = $weatherRepository->findByCity($city_name);
+        $city_weathers = $cityRepository->findByCity($country, $city);
+        $city_name = $city_weathers[0];
+        $weathers = $weatherRepository->findByCity($city_weathers[0]);
         return $this->render('weather/city.html.twig', [
             'city' => $city_name,
             'weathers' => $weathers,
         ]);
+
     }
+
 }
 
 

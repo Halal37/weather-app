@@ -10,5 +10,5 @@ weather_in_city:
 
 weather_in_city_by_country:
   path: /weather/{country}/{city}
-  controller: App\Controller\WeatherController::cityAction2
+  controller: App\Controller\WeatherController::cityByNameAction
   requirements:
