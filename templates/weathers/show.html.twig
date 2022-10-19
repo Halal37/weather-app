@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Weather{% endblock %}
+
+{% block body %}
+    <h1>Weather</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ weather.id }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ weather.date ? weather.date|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Temperature_c</th>
+                <td>{{ weather.temperatureC }}</td>
+            </tr>
+            <tr>
+                <th>Probability_of_precipitation</th>
+                <td>{{ weather.probabilityOfPrecipitation }}</td>
+            </tr>
+            <tr>
+                <th>Clouds</th>
+                <td>{{ weather.clouds }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_weathers_index') }}">back to list</a>
+
+    <a href="{{ path('app_weathers_edit', {'id': weather.id}) }}">edit</a>
+
+    {{ include('weathers/_delete_form.html.twig') }}
+{% endblock %}

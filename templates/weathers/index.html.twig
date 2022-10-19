@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Weather index{% endblock %}
+
+{% block body %}
+    <h1>Weather index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>City</th>
+                <th>Date</th>
+                <th>Temperature</th>
+                <th>Probability_of_precipitation</th>
+                <th>Clouds</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for weather in weather %}
+            <tr>
+                <td>{{ weather.id }}</td>
+                <td>{{ weather.getStringCityId() }}</td>
+                <td>{{ weather.date ? weather.date|date('Y-m-d') : '' }}</td>
+                <td>{{ weather.temperatureC }}</td>
+                <td>{{ weather.probabilityOfPrecipitation }}</td>
+                <td>{{ weather.clouds }}</td>
+                <td>
+                    <a href="{{ path('app_weathers_show', {'id': weather.id}) }}">show</a>
+                    <a href="{{ path('app_weathers_edit', {'id': weather.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_weathers_new') }}">Create new</a>
+    <a href="{{ path('app_city_index') }}">Go to cities</a>
+{% endblock %}

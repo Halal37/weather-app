@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\WeatherRepository;
+use App\Repository\CityRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -38,6 +39,10 @@ class Weather
     public function getCityId(): ?City
     {
         return $this->city_id;
+    }
+    public function getStringCityId()
+    {
+        return (string) $this->getCityId();
     }
 
     public function setCityId(?City $city_id): self
@@ -93,5 +98,10 @@ class Weather
         $this->clouds = $clouds;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return (string) $this->getId();
     }
 }

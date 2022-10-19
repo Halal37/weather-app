@@ -1,0 +1,22 @@
+App\Entity\Weather:
+  properties:
+    temperature_c:
+      - Range:
+          min: -100
+          max: 100
+          groups: [edit]
+      - NotBlank:
+          groups: [edit]
+    probability_of_precipitation:
+      - Range:
+          min: 0
+          max: 100
+          groups: [edit]
+      - NotBlank:
+          groups: [edit]
+    clouds:
+      - Range:
+          min: 0
+          max: 9
+      - NotBlank:
+          groups: [edit]
