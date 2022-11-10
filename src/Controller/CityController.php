@@ -24,7 +24,7 @@ class CityController extends AbstractController
 
     #[Route('/new', name: 'app_city_new', methods: ['GET', 'POST'])]
     public function new(Request $request, CityRepository $cityRepository): Response
-    {
+    {$this->denyAccessUnlessGranted('ROLE_CITY_NEW');
         $city = new City();
         $form = $this->createForm(CityType::class, $city, ['validation_groups' => ['edit']
         ]);
@@ -52,7 +52,7 @@ class CityController extends AbstractController
 
     #[Route('/{id}/edit', name: 'app_city_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, City $city, CityRepository $cityRepository): Response
-    {
+    {$this->denyAccessUnlessGranted('ROLE_CITY_EDIT');
         $form = $this->createForm(CityType::class, $city, ['validation_groups' => ['edit']
         ]);
         $form->handleRequest($request);
@@ -71,7 +71,7 @@ class CityController extends AbstractController
 
     #[Route('/{id}', name: 'app_city_delete', methods: ['POST'])]
     public function delete(Request $request, City $city, CityRepository $cityRepository): Response
-    {
+    {$this->denyAccessUnlessGranted('ROLE_CITY_DELETE');
         if ($this->isCsrfTokenValid('delete' . $city->getId(), $request->request->get('_token'))) {
             $cityRepository->remove($city, true);
         }

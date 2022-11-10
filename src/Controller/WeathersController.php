@@ -72,7 +72,7 @@ class WeathersController extends AbstractController
 
     #[Route('/{id}', name: 'app_weathers_delete', methods: ['POST'])]
     public function delete(Request $request, Weather $weather, WeatherRepository $weatherRepository): Response
-    {
+    {$this->denyAccessUnlessGranted('ROLE_WEATHER_DELETE');
         if ($this->isCsrfTokenValid('delete'.$weather->getId(), $request->request->get('_token'))) {
             $weatherRepository->remove($weather, true);
         }
