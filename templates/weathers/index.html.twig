@@ -28,7 +28,9 @@
                 <td>{{ weather.clouds }}</td>
                 <td>
                     <a href="{{ path('app_weathers_show', {'id': weather.id}) }}">show</a>
+                    {#    {%  if is_granted('ROLE_WEATHER_EDIT') %}#}
                     <a href="{{ path('app_weathers_edit', {'id': weather.id}) }}">edit</a>
+                 {#    {%  endif %}#}
                 </td>
             </tr>
         {% else %}
@@ -38,7 +40,15 @@
         {% endfor %}
         </tbody>
     </table>
-
+{#  {%  if is_granted('ROLE_WEATHER_NEW') %}#}
     <a href="{{ path('app_weathers_new') }}">Create new</a>
+    {#  {%  endif %}#}
     <a href="{{ path('app_city_index') }}">Go to cities</a>
+{#
+    <a href="/logout">
+        <button>
+            Logout
+        </button>
+    </a>
+#}
 {% endblock %}

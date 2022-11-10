@@ -3,16 +3,33 @@ security:
     # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
     password_hashers:
         Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
+        App\Entity\User:
+            algorithm: bcrypt
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
-        users_in_memory: { memory: null }
+        app_user_provider:
+            entity:
+                class: App\Entity\User
+                property: username
+        in_memory:
+            memory:
+                users:
+                    ssss:
+                        password: $2y$10$ASLFp02ctuKqT7cBufCoOOmNBfcVLgebhyg2hH6XT0vKVda8l4HPa
+                        roles: ['ROLE_WEATHER_NEW', 'ROLE_WEATHER_EDIT']
+                    lw46577: { password: '$2y$10$ASLFp02ctuKqT7cBufCoOOmNBfcVLgebhyg2hH6XT0vKVda8l4HPa', roles: [ 'ROLE_ADMIN' ] }
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
             lazy: true
-            provider: users_in_memory
+            provider: in_memory
+            form_login:
+                login_path: login
+                check_path: login
+            logout:
+                path: app_logout
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
@@ -23,8 +40,24 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
+         - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
+    role_hierarchy:
+        ROLE_ADMIN:
+            - ROLE_WEATHER_NEW
+            - ROLE_WEATHER_EDIT
+            - ROLE_WEATHER_DELETE
+            - ROLE_CITY_NEW
+            - ROLE_CITY_EDIT
+            - ROLE_CITY_DELETE
+        ROLE_MEASURER:
+            - ROLE_WEATHER_NEW
+            - ROLE_WEATHER_EDIT
+            - ROLE_WEATHER_DELETE
+        ROLE_CARTOGRAPHER:
+            - ROLE_CITY_NEW
+            - ROLE_CITY_EDIT
+            - ROLE_CITY_DELETE
 
 when@test:
     security:

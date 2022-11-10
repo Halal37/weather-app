@@ -2,7 +2,11 @@
 
 {% block title %}City index{% endblock %}
 
+
+
 {% block body %}
+
+
     <h1>City index</h1>
 
     <table class="table">
@@ -26,7 +30,9 @@
                 <td>{{ city.longitude }}</td>
                 <td>
                     <a href="{{ path('app_city_show', {'id': city.id}) }}">show</a>
+                    {%  if is_granted('ROLE_CITY_EDIT') %}
                     <a href="{{ path('app_city_edit', {'id': city.id}) }}">edit</a>
+                    {%  endif %}
                 </td>
             </tr>
         {% else %}
@@ -36,7 +42,16 @@
         {% endfor %}
         </tbody>
     </table>
-
+    {%  if is_granted('ROLE_CITY_NEW') %}
     <a href="{{ path('app_city_new') }}">Create new</a>
+    {%  endif %}
     <a href="{{ path('app_weathers_index') }}">Go to weather</a>
+    <a href="/logout">
+        <button>
+            Logout
+        </button>
+    </a>
+
 {% endblock %}
+
+

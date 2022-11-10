@@ -24,7 +24,7 @@ class WeathersController extends AbstractController
 
     #[Route('/new', name: 'app_weathers_new', methods: ['GET', 'POST'])]
     public function new(Request $request, WeatherRepository $weatherRepository): Response
-    {
+    {$this->denyAccessUnlessGranted('ROLE_WEATHER_NEW');
         $weather = new Weather();
         $form = $this->createForm(WeatherType::class, $weather, ['validation_groups' => ['edit']
         ]);
@@ -53,6 +53,7 @@ class WeathersController extends AbstractController
     #[Route('/{id}/edit', name: 'app_weathers_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Weather $weather, WeatherRepository $weatherRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_WEATHER_EDIT');
         $form = $this->createForm(WeatherType::class, $weather, ['validation_groups' => ['edit']
         ]);
         $form->handleRequest($request);

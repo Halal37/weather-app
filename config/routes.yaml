@@ -12,3 +12,6 @@ weather_in_city_by_country:
   path: /weather/{country}/{city}
   controller: App\Controller\WeatherController::cityByNameAction
   requirements:
+app_logout:
+  path: /logout
+  methods: GET
