@@ -8,26 +8,26 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\City;
 use App\Repository\WeatherRepository;
 use App\Repository\CityRepository;
+use App\Service\WeatherUtil;
 
 
 class WeatherController extends AbstractController
 {
-    public function cityAction(City $city, WeatherRepository $weatherRepository): Response
+    public function cityAction(City $city, WeatherUtil $weatherUtil): Response
     {
-        $weathers = $weatherRepository->findByCity($city);
+        $weathers = $weatherUtil->getWeatherForId($city);
         return $this->render('weather/city.html.twig', [
             'city' => $city,
             'weathers' => $weathers,
         ]);
     }
 
-    public function cityByNameAction(string $country, string $city, CityRepository $cityRepository, WeatherRepository $weatherRepository): Response
+    public function cityByNameAction($country, $city, CityRepository $cityRepository, WeatherUtil $weatherUtil): Response
     {
-        $city_weathers = $cityRepository->findByCity($country, $city);
-        $city_name = $city_weathers[0];
-        $weathers = $weatherRepository->findByCity($city_weathers[0]);
+        $city_name = $cityRepository->findByCity($country, $city);
+        $weathers = $weatherUtil->getWeatherForCountryAndCity($country, $city);
         return $this->render('weather/city.html.twig', [
-            'city' => $city_name,
+            'city' => $city_name[0],
             'weathers' => $weathers,
         ]);
 

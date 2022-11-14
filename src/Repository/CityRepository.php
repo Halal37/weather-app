@@ -49,4 +49,15 @@ class CityRepository extends ServiceEntityRepository
         $result = $query->getResult();
         return $result;
     }
+    public function getCity($city_key)
+    {
+        $qb = $this->createQueryBuilder('m');
+        $qb->where('m.id = :city')
+            ->setParameter('city', $city_key);
+        $query = $qb->getQuery();
+        $result = $query->getResult();
+        return $result;
+    }
 }
+
+
