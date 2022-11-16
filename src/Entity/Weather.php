@@ -104,4 +104,16 @@ class Weather
     {
         return (string) $this->getId();
     }
+
+    public function toArray(): array
+    {
+        return [
+            $this->id,
+            $this->date->format('d-m-Y'),
+            $this->temperature_c,
+            $this->probability_of_precipitation,
+            $this->clouds
+        ];
+    }
+
 }

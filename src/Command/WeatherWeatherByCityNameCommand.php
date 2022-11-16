@@ -9,6 +9,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Console\Helper\Table;
 use App\Service\WeatherUtil;
 
 #[AsCommand(
@@ -48,8 +49,19 @@ class WeatherWeatherByCityNameCommand extends Command
         }
 
         $io->success('You have a new command! Now make it your own! Pass --help to see your options.');
-        $output->writeln($this->weatherUtil->getWeatherForCountryAndCity($country,$city));
+
+        $weather = $this->weatherUtil->getWeatherForCountryAndCity($country,$city);
+        $headers = ["ID", "Date", "Temperature", "Probability of Precipitation", "Clouds"];
+        $headers = implode(',', $headers);
+
+        $output->writeln($headers);
+        foreach ($weather as $singleWeather) {
+            $row = $singleWeather->toArray();
+            $row = implode(',', $row);
+            $output->writeln($row);
+        }
 
         return Command::SUCCESS;
     }
+
 }

@@ -48,8 +48,16 @@ class WeatherWeatherByIdCommand extends Command
         $io->success('You have a new command! Now make it your own! Pass --help to see your options.');
         settype($id, "integer");
         $city = $this->cityRepository->getCity($id);
-        $output->writeln($this->weatherUtil->getWeatherForId($city[0]));
+        $weather = $this->weatherUtil->getWeatherForId($city[0]);
+        $headers = ["ID", "Date", "Temperature", "Probability of Precipitation", "Clouds"];
+        $headers = implode(',', $headers);
 
+        $output->writeln($headers);
+        foreach ($weather as $singleWeather) {
+            $row = $singleWeather->toArray();
+            $row = implode(',', $row);
+            $output->writeln($row);
+        }
         return Command::SUCCESS;
     }
 }
