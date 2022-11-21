@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\WeatherRepository;
-use App\Repository\CityRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -108,12 +107,21 @@ class Weather
     public function toArray(): array
     {
         return [
-            $this->id,
-            $this->date->format('d-m-Y'),
-            $this->temperature_c,
-            $this->probability_of_precipitation,
-            $this->clouds
+          #  $this->id,
+          #  $this->date->format('d-m-Y'),
+          #  $this->temperature_c,
+         #   $this->probability_of_precipitation,
+           # $this->clouds,
+            "id" => $this->id,
+            "date" => $this->date->format('d-m-Y'),
+            "temperature" => $this->temperature_c,
+            "probability_of_precipitation" => $this->probability_of_precipitation,
+            "clouds" => $this->clouds,
         ];
+    }
+    public function Fahrenheit($temperature_c): float
+    {
+        return round((32 +floatval($temperature_c) * 9/5) , 1);
     }
 
 }

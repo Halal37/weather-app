@@ -19,6 +19,9 @@ class WeatherUtil
     public function getWeatherForCountryAndCity($country, $city_name) : array
     {
         $city = $this->cityRepository->findByCity($country, $city_name);
+        var_dump($city_name);
+        var_dump($country);
+        var_dump($city);
         return $this->getWeatherForId($city[0]);
 
     }
